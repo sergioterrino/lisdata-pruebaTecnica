@@ -22,7 +22,7 @@ public class TypeService {
         return typeRepository.findById(id);
     }
 
-    public List<Type> getAllTypes() {
+    public List<Type> getTypes() {
         return typeRepository.findAll();
     }
 

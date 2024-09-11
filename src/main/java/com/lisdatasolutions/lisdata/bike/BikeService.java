@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lisdatasolutions.lisdata.dto.BikeDto;
 import com.lisdatasolutions.lisdata.type.Type;
 import com.lisdatasolutions.lisdata.type.TypeRepository;
 import com.lisdatasolutions.lisdata.user.User;
@@ -33,13 +34,15 @@ public class BikeService {
         return br.findAll();
     }
 
-    public Bike updateBike(int id, Bike updatedBike){
+    public Bike updateBike(int id, BikeDto bikeDto){
         Bike bike = br.findById(id).orElse(null);
         if(bike != null){
-            bike.setColor(updatedBike.getColor());
-            bike.setActive(updatedBike.isActive());
-            bike.setBasket(updatedBike.isBasket());
-            bike.setType(updatedBike.getType());
+            bike.setColor(bikeDto.getColor());
+            bike.setActive(bikeDto.isActive());
+            bike.setBasket(bikeDto.isBasket());
+            Type type = typeRepository.findById(bikeDto.getTypeId())
+                    .orElseThrow(() -> new IllegalArgumentException("Type not found"));
+            bike.setType(type);
             
             return br.save(bike);
         }else{

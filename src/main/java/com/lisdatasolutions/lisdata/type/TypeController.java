@@ -28,14 +28,14 @@ public class TypeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Type>> getAllTypes() {
-        List<Type> types = typeService.getAllTypes();
+    public ResponseEntity<List<Type>> getTypes() {
+        List<Type> types = typeService.getTypes();
         return types.size() > 0 ? new ResponseEntity<>(types, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Type> updateType(@PathVariable int id, @RequestParam String description) {
-        Type updatedType = typeService.updateType(id, description);
+    public ResponseEntity<Type> updateType(@PathVariable int id, @RequestBody Type type) {
+        Type updatedType = typeService.updateType(id, type.getDescription());
         return new ResponseEntity<>(updatedType, HttpStatus.OK);
     }
 

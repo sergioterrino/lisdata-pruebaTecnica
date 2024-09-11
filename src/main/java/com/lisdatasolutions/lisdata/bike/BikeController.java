@@ -15,17 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lisdatasolutions.lisdata.dto.BikeDto;
 
 @RestController
 @RequestMapping("/api/bikes")
 public class BikeController {
     @Autowired
     private BikeService bs;
-    
+
     @GetMapping("")
-    public ResponseEntity<List<Bike>> getCars(){
+    public ResponseEntity<List<Bike>> getCars() {
         List<Bike> bikes = bs.getBikes();
-        return bikes.size() > 0 ? new ResponseEntity<>(bikes, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return bikes.size() > 0 ? new ResponseEntity<>(bikes, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/create")
@@ -35,14 +37,14 @@ public class BikeController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Bike> updateBike(@PathVariable int id, @RequestBody Bike updatedBike){
-      Bike bike = bs.updateBike(id, updatedBike);
+    public ResponseEntity<Bike> updateBike(@PathVariable int id, @RequestBody BikeDto bikeDto) {
+        Bike bike = bs.updateBike(id, bikeDto);
         return new ResponseEntity<>(bike, HttpStatus.OK);
-    } 
+    }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteBike(@PathVariable int id){
+    public ResponseEntity<Void> deleteBike(@PathVariable int id) {
         bs.deleteBike(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    } 
+    }
 }
