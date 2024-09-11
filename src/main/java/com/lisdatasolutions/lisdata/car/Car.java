@@ -29,7 +29,7 @@ public class Car extends Vehicle{
   private int id;
 
   @Column(nullable = false, length = 30)
-  private char plate;
+  private String plate;
   private int capacity;
   private boolean electrical;
 

@@ -47,6 +47,12 @@ public class UserController {
     return isDeleted ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND); 
   }
 
+  @GetMapping("/active")
+  public ResponseEntity<List<User>> getActiveUsers() {
+    List<User> activeUsers = userService.getActiveUsers();
+    return ResponseEntity.ok(activeUsers);
+  }
+
   @GetMapping("/active-with-inactive-vehicles")
     public ResponseEntity<List<UserWithInactiveVehicles>> getActiveUsersWithInactiveVehicles() {
     List<UserWithInactiveVehicles> usersWithInactiveVehicles = userService.getActiveUsersWithInactiveVehicles();

@@ -64,6 +64,14 @@ public class UserService {
     }
   }
 
+  public List<User> getActiveUsers() {
+    try {
+      return userRepository.findByActiveTrue();
+    } catch (Exception e) {
+      throw new UserServiceException("Error getting the active users", e);
+    }
+  }
+
   public List<UserWithInactiveVehicles> getActiveUsersWithInactiveVehicles() {
     List<User> activeUsers = userRepository.findByActiveTrue();
     return activeUsers.stream()
