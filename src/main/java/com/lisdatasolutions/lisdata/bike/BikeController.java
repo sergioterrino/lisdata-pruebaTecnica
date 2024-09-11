@@ -29,9 +29,9 @@ public class BikeController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Bike> createBike(@RequestBody Bike bike, @RequestParam int userId) {
-      Bike newBike = bs.createBike(bike, userId);
-      return new ResponseEntity<>(newBike, HttpStatus.CREATED);
+    public ResponseEntity<Bike> createBike(@RequestBody Bike bike, @RequestParam int userId, @RequestParam int typeId) {
+        Bike createdBike = bs.createBike(bike, userId, typeId);
+        return new ResponseEntity<>(createdBike, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")

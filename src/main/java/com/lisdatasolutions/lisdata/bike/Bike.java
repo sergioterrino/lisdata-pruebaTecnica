@@ -1,7 +1,6 @@
 package com.lisdatasolutions.lisdata.bike;
 
 import com.lisdatasolutions.lisdata.type.Type;
-import com.lisdatasolutions.lisdata.user.User;
 import com.lisdatasolutions.lisdata.vehicle.Vehicle;
 
 import jakarta.persistence.Entity;
@@ -14,12 +13,14 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)  // Incluir equals/hashCode de la clase padre (Vehicle)
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "bike")
 public class Bike extends Vehicle {
 
@@ -32,8 +33,4 @@ public class Bike extends Vehicle {
   @ManyToOne
   @JoinColumn(name="type_id", nullable=false)
   private Type type;
-
-  @ManyToOne
-  @JoinColumn(name = "user_id", updatable = false)
-  private User user;
 }

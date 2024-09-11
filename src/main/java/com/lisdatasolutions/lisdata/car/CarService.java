@@ -2,6 +2,8 @@ package com.lisdatasolutions.lisdata.car;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,13 @@ public class CarService {
     private CarRepository cr;
     @Autowired
     private UserRepository userRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(CarService.class);
     
     public Car createCar(Car car, int userId) {
+        logger.info("Creating car for userId: {}", userId);
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+        logger.info("User found: {}", user);
         car.setUser(user);
         return cr.save(car);
     }

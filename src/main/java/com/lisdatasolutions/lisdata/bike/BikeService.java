@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lisdatasolutions.lisdata.type.Type;
+import com.lisdatasolutions.lisdata.type.TypeRepository;
 import com.lisdatasolutions.lisdata.user.User;
 import com.lisdatasolutions.lisdata.user.UserNotFoundException;
 import com.lisdatasolutions.lisdata.user.UserRepository;
@@ -15,8 +17,13 @@ public class BikeService {
     private BikeRepository br;    
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TypeRepository typeRepository;
     
-    public Bike createBike(Bike bike, int userId) {
+    public Bike createBike(Bike bike, int userId, int typeId){
+        Type type = typeRepository.findById(typeId)
+                .orElseThrow(() -> new IllegalArgumentException("Type not found"));
+        bike.setType(type);
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
         bike.setUser(user);
         return br.save(bike);
