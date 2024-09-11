@@ -1,6 +1,7 @@
 package com.lisdatasolutions.lisdata.bike;
 
 import com.lisdatasolutions.lisdata.type.Type;
+import com.lisdatasolutions.lisdata.user.User;
 import com.lisdatasolutions.lisdata.vehicle.Vehicle;
 
 import jakarta.persistence.Entity;
@@ -31,4 +32,8 @@ public class Bike extends Vehicle {
   @ManyToOne
   @JoinColumn(name="type_id", nullable=false)
   private Type type;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 }

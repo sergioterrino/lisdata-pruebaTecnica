@@ -32,7 +32,7 @@ public class Vehicle {
   @JoinColumn(name = "user_id", nullable=false)
   private User user;
 
-  private char color;
+  private String color;
 
   @Column(nullable = false)
   private boolean active;

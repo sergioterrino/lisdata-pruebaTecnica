@@ -1,9 +1,13 @@
 package com.lisdatasolutions.lisdata.user;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.lisdatasolutions.lisdata.dto.UserWithInactiveVehicles;
+import com.lisdatasolutions.lisdata.vehicle.VehicleRepository;
 
 
 @Service
@@ -11,6 +15,8 @@ public class UserService {
 
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private VehicleRepository vehicleRepository;
 
   public User createUser(User user) {
     try {
@@ -56,6 +62,22 @@ public class UserService {
     } catch (Exception e) {
       throw new UserServiceException("Error deleting the user", e);
     }
+  }
+
+  public List<User> getActiveUsers() {
+    try {
+      List<User> activeUsers = userRepository.findByActiveTrue();
+      return activeUsers;
+    } catch (Exception e) {
+      throw new UserServiceException("Error getting the active users", e);
+    }
+  }
+
+  public List<UserWithInactiveVehicles> getActiveUsersWithInactiveVehicles() {
+      List<User> activeUsers = userRepository.findByActiveTrue();
+      return activeUsers.stream()
+              .map(user -> new UserWithInactiveVehicles(user, vehicleRepository.findByUserIdAndActiveFalse(user.getId())))
+              .collect(Collectors.toList());
   }
 
 }
