@@ -28,7 +28,7 @@ public class CarController {
     @GetMapping("")
     public ResponseEntity<List<Car>> getCars(){
         List<Car> cars = cs.getCars();
-        return cars.size() > 0 ? new ResponseEntity<>(cars, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return !cars.isEmpty() ? new ResponseEntity<>(cars, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/create")

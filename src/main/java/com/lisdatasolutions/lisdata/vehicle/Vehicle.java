@@ -1,9 +1,11 @@
 package com.lisdatasolutions.lisdata.vehicle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.lisdatasolutions.lisdata.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,9 +30,10 @@ public class Vehicle {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
-  @ManyToOne
-  // @ManyToOne(fetch=FetchType.LAZY) // solo para cuando use la lista de vehicles en User
+  // @ManyToOne //por default es EAGER, carga ansiosa de la data user 
+  @ManyToOne(fetch=FetchType.LAZY) // los datos solo se cargarán cuando llame a vehicle.getUser()
   @JoinColumn(name = "user_id", nullable=false)
+  @JsonBackReference // para que cuando llame a user.getVehicles() el user no se serialice
   private User user;
 
   private String color;
