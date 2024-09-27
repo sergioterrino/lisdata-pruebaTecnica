@@ -16,7 +16,7 @@ public interface CarRepository extends JpaRepository<Car, Integer>{
     // JPQL Java Persistence
     @Query("SELECT c FROM Car c WHERE c.active = true")
     List<Car> findActiveCars();
-    @Query("SELECT c FROM Car c WHERE c.active = true and c.userId = :userId")
+    @Query("SELECT c FROM Car c WHERE c.active = true and c.user.id = :userId")
     List<Car> findActiveCarsByUserId(@Param("userId") int userId);
 
     // Native Queries
